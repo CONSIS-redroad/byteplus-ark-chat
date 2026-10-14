@@ -40,7 +40,7 @@ kluczem API w `SecretStorage` i z paskiem stanu, ktory pokazuje zuzycie planu (s
 ## Szybki start
 
 ```powershell
-git clone https://github.com/BartsGda/byteplus-ark-chat.git
+git clone https://github.com/BartsGda/byteplus-ark-chat.git](https://github.com/CONSIS-redroad/byteplus-ark-chat
 cd byteplus-ark-chat
 npm install          # 3 paczki dev: typescript, @types/vscode, @types/node
 npm run compile
@@ -151,8 +151,6 @@ Pomysly, bledy i uwagi sa mile widziane - to repo powstalo z mysla o wspolpracy:
 - Dystrybucja: GitHub Releases z plikiem `.vsix` (sekcja Instalacja). W Marketplace i Open VSX
   wtyczki nie ma - co trzeba zmienic przed publikacja w sklepie (konto, `publisher`, `keywords`,
   `icon`), opisuje [GITHUB-PUBLIKACJA.md](GITHUB-PUBLIKACJA.md).
-- Plan Coding Plan wygasa **17.10.2026** i nie odnawia sie sam; poza planem sa
-  `dola-seed-2.1-turbo`, `dola-seed-2-1-turbo-260628` i `auto` (HTTP 404).
 - Limity modeli pochodza z listy BytePlus (stan 2026-10-11, region `ap-southeast-1`);
   `ark-code-latest` to alias planu, wiec jego limit trzeba sprawdzac pomiarem.
 - Kolor progu widac tylko w pasku stanu: panel wyjscia VS Code nie renderuje ANSI, a `ThemeIcon.color`
