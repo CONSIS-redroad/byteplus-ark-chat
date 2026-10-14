@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Dokumentacja techniczna (pomiary, klasy bledow, ograniczenia)
+    url: https://github.com/BartsGda/byteplus-ark-chat/blob/main/DOKUMENTACJA.md
+    about: Zanim zglosisz - wiele zachowan jest tam wyjasnionych pomiarem (na przyklad kolor paska, brak naglowkow z kwotami w ARK)
+  - name: Zasady wspolpracy i bramki
+    url: https://github.com/BartsGda/byteplus-ark-chat/blob/main/CONTRIBUTING.md
+    about: Srodowisko, komendy bramki, konwencje projektu i sposob wydawania wersji
+  - name: Historia wersji
+    url: https://github.com/BartsGda/byteplus-ark-chat/blob/main/CHANGELOG.md
+    about: Co doszlo w ktorej wersji i jakim pomiarem to potwierdzono

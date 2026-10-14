@@ -1,0 +1,15 @@
+**/*.ts
+**/*.map
+**/tsconfig.json
+**/.vscode/**
+**/.vscodeignore
+**/.gitignore
+**/node_modules/**
+**/package-lock.json
+**/*.vsix
+test-*.cjs
+sprawdz-ts-edytora.cjs
+CONTRIBUTING.md
+GITHUB-PUBLIKACJA.md
+DOKUMENTACJA.md
+.github/**

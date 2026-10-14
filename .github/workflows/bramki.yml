@@ -1,0 +1,49 @@
+# Bramki jakosci: kompilacja dwoma kompilatorami, testy bez VS Code, kontrola paczki.
+# Uruchamiane na push do main i na kazdym PR. Zielone CI jest warunkiem zlania PR (CONTRIBUTING.md).
+name: Bramki
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bramki:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalacja zaleznosci (package-lock.json)
+        run: npm ci
+
+      - name: Kompilacja (TypeScript z node_modules)
+        run: npm run compile
+
+      - name: Kompilator wbudowany w VS Code (to realnie widzi edytor)
+        run: node sprawdz-ts-edytora.cjs
+
+      - name: Testy bez VS Code i bez sieci
+        run: npm run sprawdz:testy
+
+      - name: Kontrola paczki VSIX
+        run: npm run pakuj
+
+      - name: Nazwa i rozmiar paczki
+        run: Get-ChildItem .\byteplus-ark-chat-*.vsix | Select-Object Name, Length
+
+      - name: Artefakt z paczka VSIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: byteplus-ark-chat-*.vsix
+          if-no-files-found: error

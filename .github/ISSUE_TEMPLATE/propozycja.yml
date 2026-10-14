@@ -1,0 +1,55 @@
+name: Propozycja / pomysl
+description: Pomysl na funkcje, usprawnienie albo zmiane zachowania
+title: "[Propozycja] "
+labels: ["propozycja"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Propozycje sa mile widziane - nawet jesli nie zamierzasz pisac kodu. Najwazniejsze, zeby
+        bylo jasne, jaki problem rozwiazujemy i jak sprawdzimy, ze jest lepiej.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Jaki problem chcesz rozwiazac
+      description: Opisz sytuacje z zycia, nie rozwiazanie
+      placeholder: Na przyklad - nie wiem, ktory model z planu ma jeszcze limit, wiec klikam po kolei
+    validations:
+      required: true
+  - type: textarea
+    id: pomysl
+    attributes:
+      label: Twoj pomysl
+      description: Jak mialoby to dzialac z punktu widzenia uzytkownika VS Code
+    validations:
+      required: true
+  - type: dropdown
+    id: obszar
+    attributes:
+      label: Ktorego obszaru dotyczy
+      options:
+        - Czat i lista modeli
+        - Ustawienia i limity kontekstu
+        - Limity planu i pasek stanu
+        - Logowanie do BytePlus
+        - Dokumentacja i wspolpraca
+        - Inne
+    validations:
+      required: true
+  - type: textarea
+    id: pomiar
+    attributes:
+      label: Po czym poznamy, ze dziala
+      description: Komenda, liczba, zachowanie paska - cokolwiek, co da sie zmierzyc
+      render: text
+    validations:
+      required: false
+  - type: checkboxes
+    id: gotowosc
+    attributes:
+      label: Deklaracja
+      options:
+        - label: Moge przygotowac PR (albo zaczac od testu), jesli pomysl przejdzie
+          required: false
+        - label: Sprawdzilem/-am, ze nie ma juz takiego zgloszenia w Issues
+          required: true

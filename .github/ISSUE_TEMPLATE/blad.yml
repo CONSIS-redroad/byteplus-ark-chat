@@ -1,0 +1,72 @@
+name: Blad
+description: Cos nie dziala - czat, modele, pasek limitow, logowanie albo instalacja
+title: "[Blad] "
+labels: ["blad"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Zanim zglosisz: zajrzyj do kanalu wyjscia `BytePlus ARK` (View -> Output) - tam sa konkretne
+        kody bledow. Klucz API zamaskuj, zanim wkleisz log.
+  - type: input
+    id: wersja-wtyczki
+    attributes:
+      label: Wersja wtyczki
+      description: Wynik `code --list-extensions --show-versions` (linia z `ark-local`)
+      placeholder: ark-local.byteplus-ark-chat@0.3.0
+    validations:
+      required: true
+  - type: input
+    id: wersja-vscode
+    attributes:
+      label: Wersja VS Code i system
+      description: Help -> About (pierwsza linia) oraz system (na przyklad Windows 11 24H2)
+      placeholder: "1.140.0 (user setup), Windows 11 24H2"
+    validations:
+      required: true
+  - type: dropdown
+    id: obszar
+    attributes:
+      label: Czego dotyczy problem
+      options:
+        - Czat i lista modeli
+        - Limity planu (pasek stanu, komenda Pokaz limity planu)
+        - Logowanie do BytePlus (SSO, kod, AK/SK)
+        - Klucz API (SecretStorage, zmienna srodowiskowa)
+        - Budowanie, pakowanie, instalacja VSIX
+        - Inne
+    validations:
+      required: true
+  - type: textarea
+    id: kroki
+    attributes:
+      label: Kroki do powtorzenia
+      description: Po kolei, tak zeby dalo sie odtworzyc u siebie
+      placeholder: |
+        1. Ctrl+Shift+P -> BytePlus ARK: Pokaz limity planu
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: oczekiwane
+    attributes:
+      label: Co powinno sie stac, a co sie stalo
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Log z kanalu wyjscia `BytePlus ARK` albo zrzut `arkcli`
+      description: Opcjonalnie, ale bardzo przyspiesza diagnoze. Klucz API zamaskuj.
+      render: text
+    validations:
+      required: false
+  - type: checkboxes
+    id: kontrola
+    attributes:
+      label: Zanim wyslesz
+      options:
+        - label: Sprawdzilem/-am kanal wyjscia i dolaczylem tresc komunikatu (bez klucza API)
+          required: true
+        - label: Uzywalem/-am najnowszej wersji wtyczki z tego repo
+          required: true

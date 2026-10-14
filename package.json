@@ -1,0 +1,204 @@
+{
+  "name": "byteplus-ark-chat",
+  "displayName": "BytePlus ModelArk (ARK) - modele do czatu",
+  "description": "Dodaje modele BytePlus ModelArk (Coding Plan) do pickera czatu w VS Code. Klucz API trafia do SecretStorage (albo do zmiennej srodowiskowej), nie ma zaleznosci od logowania do GitHub. Wtyczka autorska: BartsGda + asystent AI (Cline).",
+  "publisher": "ark-local",
+  "version": "0.3.0",
+  "license": "MIT",
+  "author": {
+    "name": "BartsGda"
+  },
+  "contributors": [
+    {
+      "name": "asystent AI (Cline)"
+    }
+  ],
+  "engines": {
+    "vscode": "^1.140.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BartsGda/byteplus-ark-chat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BartsGda/byteplus-ark-chat/issues"
+  },
+  "homepage": "https://github.com/BartsGda/byteplus-ark-chat#readme",
+  "categories": [
+    "AI",
+    "Chat"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languageModelChatProviders": [
+      {
+        "vendor": "byteplus-ark",
+        "displayName": "BytePlus ARK (ModelArk)",
+        "managementCommand": "byteplusArk.ustawKlucz"
+      }
+    ],
+    "commands": [
+      {
+        "command": "byteplusArk.ustawKlucz",
+        "title": "Ustaw klucz API",
+        "category": "BytePlus ARK"
+      },
+      {
+        "command": "byteplusArk.usunKlucz",
+        "title": "Usun klucz API",
+        "category": "BytePlus ARK"
+      },
+      {
+        "command": "byteplusArk.pokazStan",
+        "title": "Pokaz stan (klucz, trasa, modele)",
+        "category": "BytePlus ARK"
+      },
+      {
+        "command": "byteplusArk.testuj",
+        "title": "Testuj polaczenie z ARK",
+        "category": "BytePlus ARK"
+      },
+      {
+        "command": "byteplusArk.pokazLimity",
+        "title": "Pokaz limity planu (sesja 5 h / 7 dni / 30 dni)",
+        "category": "BytePlus ARK"
+      },
+      {
+        "command": "byteplusArk.podgladProgow",
+        "title": "Podglad kolorow paska limitow (diagnostyka)",
+        "category": "BytePlus ARK"
+      },
+      {
+        "command": "byteplusArk.zaloguj",
+        "title": "Zaloguj sie (limity planu)",
+        "category": "BytePlus ARK"
+      },
+      {
+        "command": "byteplusArk.zalogujKodem",
+        "title": "Zaloguj kodem z przegladarki (bez terminala)",
+        "category": "BytePlus ARK"
+      }
+    ],
+    "configuration": {
+      "title": "BytePlus ARK",
+      "properties": {
+        "byteplusArk.baseUrl": {
+          "type": "string",
+          "default": "https://ark.ap-southeast.bytepluses.com/api/coding/v3",
+          "markdownDescription": "Baza OpenAI-compatible. Do planu Coding Plan uzyj `https://ark.ap-southeast.bytepluses.com/api/coding/v3`; dla lokalnego mostu LiteLLM bez klucza `http://127.0.0.1:4010/v1`."
+        },
+        "byteplusArk.models": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "glm-5.2",
+            "glm-5.3-flash",
+            "deepseek-v4.1-flash",
+            "deepseek-v4-flash",
+            "deepseek-v4-pro",
+            "dola-seed-2.0-pro",
+            "dola-seed-2.0-lite",
+            "seed-2-0-lite-260428",
+            "ark-code-latest"
+          ],
+          "markdownDescription": "Identyfikatory modeli (pole `model` w zapytaniu). Dla mostu LiteLLM wpisz aliasy z `config-bez-klucza.yaml`. Wszystkie wpisane domyslnie sprawdzono na zywo 2026-10-11 (HTTP 200)."
+        },
+        "byteplusArk.labelPrefix": {
+          "type": "string",
+          "default": "ARK",
+          "description": "Prefiks nazwy modelu w pickerze czatu."
+        },
+        "byteplusArk.maxInputTokens": {
+          "type": "number",
+          "default": 1024000,
+          "description": "Ile tokenow model przyjmuje na wejsciu (okno kontekstu minus wyjscie). Dla modeli z planu ARK 1024K = 1024000."
+        },
+        "byteplusArk.maxOutputTokens": {
+          "type": "number",
+          "default": 131072,
+          "description": "Maksymalna liczba tokenow w odpowiedzi. Domyslny output u dostawcy to tylko 4K, wiec warto podniesc."
+        },
+        "byteplusArk.toolCalling": {
+          "type": "boolean",
+          "default": true,
+          "description": "Oglaszaj obsluge narzedzi (tryb agenta). Wylacz, jesli model nie wspiera funkcji."
+        },
+        "byteplusArk.vision": {
+          "type": "boolean",
+          "default": false,
+          "description": "Oglaszaj obsluge obrazow. Modele ARK z planu nie przyjmuja obrazow, dlatego domyslnie false."
+        },
+        "byteplusArk.apiKeyEnvVar": {
+          "type": "string",
+          "default": "BYTEPLUS_ARK_API_KEY",
+          "description": "Nazwa zmiennej srodowiskowej, z ktorej wtyczka wezmie klucz, gdy nie ma go w SecretStorage. Puste pole wylacza ten mechanizm."
+        },
+        "byteplusArk.timeoutSeconds": {
+          "type": "number",
+          "default": 300,
+          "description": "Limit czasu pojedynczego zapytania (sekundy)."
+        },
+        "byteplusArk.debug": {
+          "type": "boolean",
+          "default": false,
+          "description": "Zapisuj zapytania i odpowiedzi w kanale wyjscia BytePlus ARK (klucz jest maskowany)."
+        },
+        "byteplusArk.limityOdswiezanie": {
+          "type": "string",
+          "enum": [
+            "wylaczone",
+            "tylko na zadanie",
+            "co 1 min",
+            "co 5 min",
+            "co 10 min",
+            "co 15 min",
+            "co 30 min",
+            "co 60 min"
+          ],
+          "default": "co 15 min",
+          "enumDescriptions": [
+            "Nie pokazuj elementu paska i nie pytaj `arkcli` w tle. Komenda `Pokaz limity planu` nadal dziala i pyta CLI na zadanie.",
+            "Pokazuj element paska z ostatnim udanym odczytem (z globalState); `arkcli` pytamy tylko z komendy.",
+            "Odswiezaj limity w tle co minute.",
+            "Odswiezaj limity w tle co 5 minut.",
+            "Odswiezaj limity w tle co 10 minut.",
+            "Odswiezaj limity w tle co 15 minut.",
+            "Odswiezaj limity w tle co 30 minut.",
+            "Odswiezaj limity w tle co godzine."
+          ],
+          "markdownDescription": "Jeden przelacznik paska limitow planu: `wylaczone` chowa element paska stanu, `tylko na zadanie` zostawia go z ostatnim odczytem, a `co X min` wlacza odczyt w tle. Element pokazuje procenty calkowite w kolejnosci sesja / tydzien / miesiac (np. `$(pulse) ARK 63% 11% 52%`), a kolor bierze z najgorszego z nich: `charts.green` ponizej 50%, `charts.yellow` od 50%, `charts.red` od 80% (od 80% dochodzi tez tlo `statusBarItem.warningBackground` - innych tel VS Code nie dopuszcza). Pelne nazwy okien, dokladne procenty, paski blokowe i czasy resetu sa w tooltipie. Zrodlem jest `arkcli usage plan` z oficjalnego CLI BytePlus, bo API ARK nie zwraca kwot w naglowkach. Stare klucze 0.1.x (`byteplusArk.limityWStatusBar`, `byteplusArk.limityOdswiezanieSekundy`) sa nadal czytane przy pierwszym starcie, dopoki ich nie usuniesz."
+        },
+        "byteplusArk.arkcliSciezka": {
+          "type": "string",
+          "default": "arkcli",
+          "markdownDescription": "Polecenie albo pelna sciezka do CLI BytePlus (`npm install -g @byteplus/ark-cli@latest`). Na Windows wystarczy `arkcli`."
+        },
+        "byteplusArk.arkcliProfil": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Nazwa profilu arkcli, z ktorego wtyczka czyta limity (puste = profil domyslny CLI). Ustaw, gdy limity pochodza z profilu innego niz domyslny; liste wypisuje `arkcli profile list`. Profile z AK/SK tworzy w 1.0.38 tylko przestarzale `arkcli config init --access-key <AK> --secret-key <SK> --profile <nazwa>`, bo nastepca `arkcli profile create` nie ma flag AK/SK i wymaga istniejacego logowania SSO."
+        },
+        "byteplusArk.konsolaPlanuUrl": {
+          "type": "string",
+          "default": "https://console.byteplus.com/ark/region:ap-southeast-1/subscription/coding-plan",
+          "description": "Adres strony konsoli, ktora pokazuje zuzycie planu (sekcja My subscription)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "sprawdz:ts-edytora": "node sprawdz-ts-edytora.cjs",
+    "sprawdz:testy": "node test-limity.cjs && node test-dziennik.cjs && node test-logowanie.cjs",
+    "pakuj": "npx --yes @vscode/vsce package --allow-missing-repository --skip-license"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "1.140.0",
+    "typescript": "^5.9.0"
+  }
+}
